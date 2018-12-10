@@ -36,11 +36,27 @@ def p_structure_while(p):
     ''' structure : WHILE expression '{' programme '}' '''
     p[0] = AST.WhileNode([p[2],p[4]])
 
+# TODO Vérifier les structures LINE, TEXT, ELLIPSE, SQUARE
 # Défini une fonction LINE
 def p_structure_figure_line(p):
     ''' structure : LINE '(' programme ')' '''
-    p[0] = AST.FigureLine(p[3])
-
+    p[0] = AST.FigureNode(p[3])
+    
+# Défini une fonction TEXT
+def p_structure_figure_text(p):
+    ''' structure : TEXT '(' programme ')' '''
+    p[0] = AST.FigureNode(p[3])
+    
+# Défini une fonction ELLIPSE
+def p_structure_figure_ellipse(p):
+    ''' structure : ELLIPSE '(' programme ')' '''
+    p[0] = AST.FigureNode(p[3])
+    
+# Défini une fonction SQUARE
+def p_structure_figure_square(p):
+    ''' structure : SQUARE '(' programme ')' '''
+    p[0] = AST.FigureNode(p[3])
+    
 # Défini une structure comme un IDPARAMS (line, text, ...) et son EXPRESSION (ses paramètres)
 def p_structure_param(p):
     ''' structure : IDPARAMS ':' EXPRESSION '''

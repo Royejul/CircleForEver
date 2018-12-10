@@ -35,7 +35,7 @@ tokens = ('NUMBER', 'ADD_OP', 'MUL_OP', 'IDENTIFIER', 'IDPARAMS', 'WORDPARAMS') 
 
 t_ignore = ' \t'
 
-literals = '();='
+literals = '();=,'
 
 def t_ADD_OP(t):
     r'[+-]'
