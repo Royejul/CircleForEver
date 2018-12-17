@@ -1,14 +1,10 @@
 import ply.lex as lex
 import sys
 
-
 reserved_words = (
-    'while',
-    'for',
-    'line',
-    'text',
-    'ellipse',
-    'square')
+    'while', 'for', 'if', 'else', #Loops and conditions
+    'line', 'text', 'ellipse', 'square'
+)
 
 reserved_params = (
     'pos',
@@ -16,26 +12,21 @@ reserved_params = (
     'color',
     'fontsize',
     'word',
-    'radius')
+    'radius'
+)
     
 reserved_colors = (
-    'white',
-    'black',
-    'red',
-    'blue',
-    'yellow',
-    'green',
-    'pink',
-    'purple',
-    'maroon',
-    'orange',
-    'lime')
+    'white', 'black', 'red', 'blue',
+    'yellow', 'green', 'pink', 'purple',
+    'maroon', 'orange', 'lime'
+)
     
-tokens = ('NUMBER', 'ADD_OP', 'MUL_OP', 'IDENTIFIER', 'IDPARAMS', 'WORDPARAMS') + tuple(map(lambda s:s.upper(), reserved_words) + tuple(map(lambda s:s.upper(), reserved_params) + tuple(map(lambda s:s.upper(), reserved_colors))
+tokens = ('NUMBER', 'ADD_OP', 'MUL_OP', 'STRING', 'IDENTIFIER', 'IDPARAMS', 'WORDPARAMS'
+          ) + tuple(map(lambda s:s.upper(), reserved_words)) + tuple(map(lambda s:s.upper(), reserved_params)) + tuple(map(lambda s:s.upper(), reserved_colors))
 
 t_ignore = ' \t'
 
-literals = '();=,'
+literals = '();=,:{}<>'
 
 def t_ADD_OP(t):
     r'[+-]'
@@ -49,23 +40,20 @@ def t_NUMBER(t):
     r'\d+(\.\d+)?'
     t.value = float(t.value)
     return t
+
+def t_STRING(t):
+    r'\".*?\"'
+    t.value = t.value[1:-1] # [1:-1] enlève les guillemets de la string
+    return t
     
 def t_IDENTIFIER(t):
     r'[A-Za-z_]\w*'
     if t.value in reserved_words:
-        t.type = t.value.upper()
-    return t
-
-def t_IDPARAMS(t):
-    r'[A-Za-z_]\w*'
-    if t.value in reserved_params:
-        t.type = t.value.upper()
-    return t
-
-def t_WORDPARAMS(t):
-    r'[A-Za-z_]\w*'
-    if t.value in reserved_colors:
-        t.type = t.value.upper()
+        t.type = "IDENTIFIER"
+    elif t.value in reserved_params:
+        t.type = "IDPARAMS"
+    elif t.value in reserved_colors:
+        t.type = "WORDPARAMS"
     return t
 
 def t_newline(t):
@@ -79,7 +67,13 @@ def t_error(t):
 lex.lex()
     
 if __name__ == "__main__":
-    prog = open(sys.argv[1]).read()
+    try:
+        filename = sys.argv[1]
+    except:
+        filename = "test.txt"
+
+    prog = open(filename).read()
+
     lex.input(prog)
     while 1:
         tok = lex.token()

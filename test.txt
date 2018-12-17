@@ -1,0 +1,6 @@
+line(pos: 0, 0, 20, 0; width: 10; color: red)
+text(pos: 0,0; fontsize: 12; color: 255, 0, 0; word: "Un mot")
+for(i = 1; i <= 12; i += 1)
+{
+    ellipse(pos: 10*i,10*i; radius: 5; width: 5; color:blue)
+}
