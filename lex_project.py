@@ -49,11 +49,11 @@ def t_STRING(t):
 def t_IDENTIFIER(t):
     r'[A-Za-z_]\w*'
     if t.value in reserved_words:
-        t.type = "IDENTIFIER"
+        t.type = t.value.upper()
     elif t.value in reserved_params:
-        t.type = "IDPARAMS"
+        t.type = t.value.upper()
     elif t.value in reserved_colors:
-        t.type = "WORDPARAMS"
+        t.type = t.value.upper()
     return t
 
 def t_newline(t):
