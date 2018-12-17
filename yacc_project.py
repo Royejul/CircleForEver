@@ -36,33 +36,32 @@ def p_structure_while(p):
     ''' structure : WHILE expression '{' programme '}' '''
     p[0] = AST.WhileNode([p[2],p[4]])
 
-#TODO : IDFORMS(PARAMS)
-#TODO PARAMS = LIGNE DE PARAMETRES = PARAMETER, PARAMETER, ...
-#TODO AST.PARAMNODES a modifier surement, faire au propre pour les params et parameter
-
 # Défini une structure comme un IDENTIFIER(programme) --> (Line(pos: ...))
 def p_structure_form(p):
     ''' structure : FORMS '(' params ')' '''
     p[0] = AST.FigureNode(p[1])
-    
-# Défini une structure comme un IDPARAMS (pos, width, etc) et son EXPRESSION (ses paramètres)
-def p_params(p):
-    ''' params : IDPARAMS ':' parameter ';' params
-        | IDPARAMS ':' parameter '''
-    p[0] = AST.ParameterNode(p[1], p[3])
 
+#TODO HERE : AST.ParameterNode ???    
+# Défini une suite de paramètres comme un IDPARAMS (pos, width, etc) et son EXPRESSION (ses paramètres)
+def p_params(p):
+    ''' params : IDPARAMS ':' paramvalue ';' params
+        | IDPARAMS ':' paramvalue '''
+    p[0] = AST.ParameterNode(p[1])
+
+#TODO HERE : Est-ce à compléter ? Il me semble que c'est correct (pris de l'explication du prof)
+#TODO Le problème vient surement des AST.TokenNode et AST.ParameterNode (pour p_params). 
 # Défini une expression comme une suite d'expressions, séparées par une virgule (paramètres)
-def p_parameter(p):
-    ''' parameter : expression ',' parameter 
+def p_paramvalue(p):
+    ''' paramvalue : expression ',' paramvalue 
         | expression '''
-    p[0] = AST.TokenNode(p[1])
+    p[0] = AST.TokenNode(p[1].children) #TODO p[1].children me semble correcte pour moi...
 
 # Défini une expression comme un NUMBER ou IDENTIFIER ou une COLOR
-def p_expression(p):
+def p_expression_num_or_id(p):
     ''' expression : NUMBER
         | IDENTIFIER 
         | COLORPARAMS
-        | '"' STRING '"' '''
+        | '"' STRING  '"' '''
     p[0] = AST.TokenNode(p[1])
 
 # Défini une expression comme une expression entre parenthèse
@@ -92,6 +91,7 @@ def p_minus(p):
 def p_assign(p):
     ''' assignation : IDENTIFIER '=' expression '''
     p[0] = AST.AssignNode([AST.TokenNode(p[1]),p[3]])
+    vars[p[1]] = p[3]
 
 def p_error(p):
     if p:

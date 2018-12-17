@@ -136,22 +136,31 @@ class ForNode(Node):
     type = 'for'
     
 class FigureNode(Node):
-    type = 'figure'
-    def __init__(self, fig):
+    type = 'Figure'
+    def __init__(self, name):
         Node.__init__(self)
-        self.fig = fig
+        self.name = name
         
     def __repr__(self):
-        return "%s" % (self.fig)
+        return repr(self.name)
     
 class ParameterNode(Node):
-    type = 'parameters'
-    def __init__(self, paramID, children):
-        Node.__init__(self, children)
-        self.paramID = paramID
-        
+    type = 'Parameters'
+    def __init__(self, name):
+        Node.__init__(self)
+        self.name = name
+    
     def __repr__(self):
-        return "%s (%s)" % (self.op, self.nbargs)
+        return repr(self.name)
+ 
+class ParamValueNode(Node):
+    type = 'ParamValues'
+    def __init__(self, name):
+        Node.__init__(self)
+        self.name = name
+    
+    def __repr__(self):
+        return repr(self.name) 
     
 class EntryNode(Node):
     type = 'ENTRY'
