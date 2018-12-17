@@ -105,6 +105,7 @@ class TokenNode(Node):
         return repr(self.tok)
     
 class OpNode(Node):
+    type = 'operator'
     def __init__(self, op, children):
         Node.__init__(self,children)
         self.op = op
@@ -119,6 +120,12 @@ class OpNode(Node):
 class AssignNode(Node):
     type = '='
     
+class CompareNode(Node):
+    type = '<='
+    
+class PlusEgalNode(Node):
+    type = '+='
+    
 class PrintNode(Node):
     type = 'print'
     
@@ -129,17 +136,22 @@ class ForNode(Node):
     type = 'for'
     
 class FigureNode(Node):
-    def __init__(self, fig, child):
-        Node.__init__(self,child)
+    type = 'figure'
+    def __init__(self, fig):
+        Node.__init__(self)
         self.fig = fig
         
     def __repr__(self):
-        return "%s (%s)" % (self.fig, self.child)
+        return "%s" % (self.fig)
     
-class ParamNode(Node):
-    type = 'parameter'
-    def __init__(self, children):
+class ParameterNode(Node):
+    type = 'parameters'
+    def __init__(self, paramID, children):
         Node.__init__(self, children)
+        self.paramID = paramID
+        
+    def __repr__(self):
+        return "%s (%s)" % (self.op, self.nbargs)
     
 class EntryNode(Node):
     type = 'ENTRY'
