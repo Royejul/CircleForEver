@@ -135,7 +135,7 @@ class WhileNode(Node):
 class ForNode(Node):
     type = 'for'
     
-class FigureNode(Node):
+class FormNode(Node):
     type = 'Figure'
     def __init__(self, name):
         Node.__init__(self)
@@ -146,12 +146,17 @@ class FigureNode(Node):
     
 class ParameterNode(Node):
     type = 'Parameters'
-    def __init__(self, name):
-        Node.__init__(self)
+    def __init__(self, name, children):
+        Node.__init__(self, children)
         self.name = name
     
+        try:
+            self.nbargs = len(children)
+        except AttributeError:
+            self.nbargs = 1
+        
     def __repr__(self):
-        return repr(self.name)
+        return "%s (%s)" % (self.name, self.nbargs)
  
 class ParamValueNode(Node):
     type = 'ParamValues'

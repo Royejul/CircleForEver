@@ -39,14 +39,14 @@ def p_structure_while(p):
 # Défini une structure comme un IDENTIFIER(programme) --> (Line(pos: ...))
 def p_structure_form(p):
     ''' structure : FORMS '(' params ')' '''
-    p[0] = AST.FigureNode(p[1])
+    p[0] = AST.FormNode(p[1])
 
 #TODO HERE : AST.ParameterNode ???    
 # Défini une suite de paramètres comme un IDPARAMS (pos, width, etc) et son EXPRESSION (ses paramètres)
 def p_params(p):
     ''' params : IDPARAMS ':' paramvalue ';' params
         | IDPARAMS ':' paramvalue '''
-    p[0] = AST.ParameterNode(p[1])
+    p[0] = AST.ParameterNode(p[1], [p[3]])
 
 #TODO HERE : Est-ce à compléter ? Il me semble que c'est correct (pris de l'explication du prof)
 #TODO Le problème vient surement des AST.TokenNode et AST.ParameterNode (pour p_params). 
@@ -54,7 +54,7 @@ def p_params(p):
 def p_paramvalue(p):
     ''' paramvalue : expression ',' paramvalue 
         | expression '''
-    p[0] = AST.TokenNode(p[1].children) #TODO p[1].children me semble correcte pour moi...
+    p[0] = AST.TokenNode(p[1]) #TODO p[1].children me semble correcte pour moi...
 
 # Défini une expression comme un NUMBER ou IDENTIFIER ou une COLOR
 def p_expression_num_or_id(p):
