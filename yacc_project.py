@@ -69,7 +69,7 @@ def p_expression_num_or_id(p):
     ''' expression : NUMBER
         | IDENTIFIER 
         | COLORPARAMS
-        | '"' STRING  '"' '''
+        | STRING '''
     p[0] = AST.TokenNode(p[1])
 
 # Défini une expression comme une expression entre parenthèse
@@ -127,8 +127,8 @@ if __name__ == "__main__":
     result = yacc.parse(prog)
     print(result)
     
-    import os
-    graph = result.makegraphicaltree()
-    name = os.path.splitext(sys.argv[1])[0] + '-ast.pdf'
-    graph.write_pdf(name)
+    #import os
+    #graph = result.makegraphicaltree()
+    #name = os.path.splitext(sys.argv[1])[0] + '-ast.pdf'
+    #graph.write_pdf(name)
     #print("wrote ast to", name)
