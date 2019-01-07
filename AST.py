@@ -122,6 +122,16 @@ class AssignNode(Node):
     
 class CompareNode(Node):
     type = '<='
+    def __init__(self, op, children):
+        Node.__init__(self,children)
+        self.op = op
+        try:
+            self.nbargs = len(children)
+        except AttributeError:
+            self.nbargs = 1
+        
+    def __repr__(self):
+        return "%s (%s)" % (self.op, self.nbargs)
     
 class PlusEgalNode(Node):
     type = '+='
@@ -137,19 +147,9 @@ class ForNode(Node):
     
 class FormNode(Node):
     type = 'Figure'
-    def __init__(self, name):
-        Node.__init__(self)
-        self.name = name
-        
-    def __repr__(self):
-        return repr(self.name)
-    
-class ParameterNode(Node):
-    type = 'Parameters'
     def __init__(self, name, children):
         Node.__init__(self, children)
         self.name = name
-    
         try:
             self.nbargs = len(children)
         except AttributeError:
@@ -157,15 +157,25 @@ class ParameterNode(Node):
         
     def __repr__(self):
         return "%s (%s)" % (self.name, self.nbargs)
- 
-class ParamValueNode(Node):
-    type = 'ParamValues'
-    def __init__(self, name):
-        Node.__init__(self)
+
+class ParameterNode(Node):
+    type = 'Parameters'
+    def __init__(self, name, children):
+        Node.__init__(self, children)
         self.name = name
-    
+        try:
+            self.nbargs = len(children)
+        except AttributeError:
+            self.nbargs = 1
+        
     def __repr__(self):
-        return repr(self.name) 
+        return "%s (%s)" % (self.name, self.nbargs)
+
+class IDNode(Node):
+    type="ID"
+
+class ValueNode(Node):
+    type="Value"
     
 class EntryNode(Node):
     type = 'ENTRY'

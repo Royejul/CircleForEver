@@ -6,7 +6,7 @@ import AST
 vars = {}
 
 def p_programme_statement(p):
-    ''' programme : statement '''
+    ''' programme : statement ';' '''
     p[0] = AST.ProgramNode(p[1])
 
 # Si une ligne contient plusieurs codes exécutables
@@ -39,22 +39,30 @@ def p_structure_while(p):
 # Défini une structure comme un IDENTIFIER(programme) --> (Line(pos: ...))
 def p_structure_form(p):
     ''' structure : FORMS '(' params ')' '''
-    p[0] = AST.FormNode(p[1])
+    p[0] = AST.FormNode(p[1] , [p[3]])
 
-#TODO HERE : AST.ParameterNode ???    
 # Défini une suite de paramètres comme un IDPARAMS (pos, width, etc) et son EXPRESSION (ses paramètres)
 def p_params(p):
     ''' params : IDPARAMS ':' paramvalue ';' params
         | IDPARAMS ':' paramvalue '''
-    p[0] = AST.ParameterNode(p[1], [p[3]])
-
-#TODO HERE : Est-ce à compléter ? Il me semble que c'est correct (pris de l'explication du prof)
-#TODO Le problème vient surement des AST.TokenNode et AST.ParameterNode (pour p_params). 
+    try:
+        #TODO Remonter les noeuds WIDTH et COLOR au meme niveau que POS !!!
+        print("rec")
+        #p[0] = AST.ParameterNode(AST.IDNode(p[1]), [p[3]]+[p[5]])
+        p[0] = AST.ParameterNode(p[1], [p[3]]+[p[5]])
+    except:
+        print("final")
+        #p[0] = AST.ParameterNode(AST.IDNode(p[1]), [p[3]])
+        p[0] = AST.ParameterNode(p[1], [p[3]])
+ 
 # Défini une expression comme une suite d'expressions, séparées par une virgule (paramètres)
 def p_paramvalue(p):
     ''' paramvalue : expression ',' paramvalue 
         | expression '''
-    p[0] = AST.TokenNode(p[1]) #TODO p[1].children me semble correcte pour moi...
+    try:
+        p[0] = AST.ValueNode([p[1]]+p[3].children)
+    except:
+        p[0] = AST.ValueNode(p[1])
 
 # Défini une expression comme un NUMBER ou IDENTIFIER ou une COLOR
 def p_expression_num_or_id(p):
@@ -75,13 +83,13 @@ def p_expression_op(p):
             | expression MUL_OP expression '''
     p[0] = AST.OpNode(p[2], [p[1], p[3]])
 
-#def p_expression_compare(p):
-#    ''' expression : expression COMPARE expression '''
-#    p[0] = AST.CompareNode(p[4])
+def p_expression_compare(p):
+    ''' expression : expression COMPARE expression '''
+    p[0] = AST.CompareNode(p[2], [p[1], p[3]])
 
-#def p_expression_plusegal(p):
-#    ''' expression : expression PLUSEGAL expression '''
-#    p[0] = AST.PlusEgalNode(p[3])
+def p_expression_plusegal(p):
+    ''' expression : expression PLUSEGAL expression '''
+    p[0] = AST.PlusEgalNode(p[3])
 
 # Défini nombre négatif
 def p_minus(p):
@@ -120,7 +128,7 @@ if __name__ == "__main__":
     print(result)
     
     import os
-    #graph = result.makegraphicaltree()
-    #name = os.path.splitext(sys.argv[1])[0] + '-ast.pdf'
-    #graph.write_pdf(name)
+    graph = result.makegraphicaltree()
+    name = os.path.splitext(sys.argv[1])[0] + '-ast.pdf'
+    graph.write_pdf(name)
     #print("wrote ast to", name)
