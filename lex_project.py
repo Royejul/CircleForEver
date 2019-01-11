@@ -3,7 +3,6 @@ import sys
 
 reserved_words = (
     'while', 'for', 'print' #Loops and conditions
-    
 )
 
 reserved_forms = (
@@ -26,7 +25,7 @@ reserved_colors = (
     'maroon', 'orange', 'lime'
 )
     
-tokens = ('NUMBER', 'ADD_OP', 'MUL_OP', 'STRING', 'IDENTIFIER', 'FORMS', 'IDPARAMS', 'COLORPARAMS', 'EQUALS', 'LESSTHAN','GREATTHAN','NOTEQUAL',) + tuple(map(lambda s:s.upper(), reserved_words)) + tuple(map(lambda s:s.upper(), reserved_params)) + tuple(map(lambda s:s.upper(), reserved_colors))
+tokens = ('NUMBER', 'ADD_OP', 'MUL_OP', 'STRING', 'IDENTIFIER', 'FORMS', 'IDPARAMS', 'COLORPARAMS', 'COMP', 'EQUALS', 'LESSTHAN','GREATTHAN','NOTEQUAL',) + tuple(map(lambda s:s.upper(), reserved_words)) + tuple(map(lambda s:s.upper(), reserved_params)) + tuple(map(lambda s:s.upper(), reserved_colors))
 
 t_ignore = ' \t'
 
@@ -53,8 +52,7 @@ def t_STRING(t):
 def t_IDENTIFIER(t):
     r'[A-Za-z_]\w*'
     if t.value in reserved_words:
-        t.type = 'IDENTIFIER'
-        #t.type = t.value.upper()
+        t.type = t.value.upper()
     elif t.value in reserved_params:
         t.type = 'IDPARAMS'
         #t.type = t.value.upper()
@@ -64,6 +62,10 @@ def t_IDENTIFIER(t):
     elif t.value in reserved_colors:
         t.type = 'COLORPARAMS'
         #t.type = t.value.upper()
+    return t
+
+def t_COMP(t):
+    r'(<|>)'
     return t
 
 def t_EQUALS(t):

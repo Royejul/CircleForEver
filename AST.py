@@ -151,9 +151,7 @@ class ForNode(Node):
 class CompareNode(Node):
     """CompareNode class."""
     type = 'compare'
-    
     def __init__(self, comparator, children):
-        """Init comparatorareNode."""
         Node.__init__(self, children)
         self.comparator = comparator
         try:
@@ -177,24 +175,42 @@ class FormNode(Node):
     def __repr__(self):
         return "%s (%s)" % (self.name, self.nbargs)
 
+class ParameterList(Node):
+    type = 'ListParameters'
+
+    def __init__(self, children):
+        Node.__init__(self, children)
+        try:
+            self.nbargs = len(children)
+        except AttributeError:
+            self.nbargs = 1
+
+    def __repr__(self):
+        return "%s (%s)" % (self.type, self.nbargs)
+
 class ParameterNode(Node):
     type = 'Parameters'
     def __init__(self, name, children):
         Node.__init__(self, children)
         self.name = name
-        try:
-            self.nbargs = len(children)
-        except AttributeError:
-            self.nbargs = 1
-        
+
     def __repr__(self):
-        return "%s (%s)" % (self.name, self.nbargs)
+        return "%s" % (self.name)
 
 class IDNode(Node):
     type="ID"
 
 class ValueNode(Node):
     type="Value"
+    def __init__(self, children):
+        Node.__init__(self, children)
+        try:
+            self.nbargs = len(children)
+        except AttributeError:
+            self.nbargs = 1
+
+    def __repr__(self):
+        return "%s (%s)" % (self.type, self.nbargs)
     
 class PrintNode(Node):
     type = 'Print'

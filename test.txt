@@ -1,4 +1,11 @@
-for(a=0;a<10;a+=2)
-{
-	print a;
+line(pos : 0,0,0,10 ; color : black ; width: 2);
+line(pos : 0,0,0,10 ; color : black ; width: 2);
+i=0;
+print i ;
+WHILE ( i < 10){
+	print i;
+	i= i+1
+}
+for( a = 0 ; a<10 ; a= a+2 ){
+	print a
 }
