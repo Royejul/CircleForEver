@@ -5,9 +5,9 @@ _tabversion = '3.8'
 
 _lr_method = 'LALR'
 
-_lr_signature = '0764EE69FBF8D50A3B48F0A3FDAB3F44'
+_lr_signature = '98CBF3F47B3C76BB84F4534E0400EB8C'
     
-_lr_action_items = {'FOR':([0,9,21,27,],[5,5,5,5,]),'WHILE':([0,9,21,27,],[6,6,6,6,]),'FORMS':([0,9,21,27,],[7,7,7,7,]),'IDENTIFIER':([0,5,6,9,15,16,19,21,22,23,27,38,44,],[8,12,12,8,12,12,12,8,12,12,8,12,12,]),'$end':([1,2,3,4,11,12,13,20,26,30,32,33,34,35,37,39,40,],[0,-1,-3,-4,-12,-13,-14,-2,-19,-20,-17,-18,-15,-16,-7,-5,-6,]),'}':([2,3,4,11,12,13,20,26,30,31,32,33,34,35,36,37,39,40,],[-1,-3,-4,-12,-13,-14,-2,-19,-20,39,-17,-18,-15,-16,40,-7,-5,-6,]),';':([2,3,4,11,12,13,26,30,32,33,34,35,37,39,40,41,42,46,],[9,-3,-4,-12,-13,-14,-19,-20,-17,-18,-15,-16,-7,-5,-6,43,-11,-10,]),'NUMBER':([5,6,15,16,19,22,23,38,44,],[11,11,11,11,11,11,11,11,11,]),'COLORPARAMS':([5,6,15,16,19,22,23,38,44,],[13,13,13,13,13,13,13,13,13,]),'"':([5,6,15,16,19,22,23,24,38,44,],[14,14,14,14,14,14,14,34,14,14,]),'(':([5,6,7,15,16,19,22,23,38,44,],[15,15,18,15,15,15,15,15,15,15,]),'ADD_OP':([5,6,10,11,12,13,15,16,17,19,22,23,25,26,30,32,33,34,35,38,42,44,],[16,16,22,-12,-13,-14,16,16,22,16,16,16,22,-19,22,-17,-18,-15,-16,16,22,16,]),'=':([8,],[19,]),'{':([10,11,12,13,17,26,32,33,34,35,],[21,-12,-13,-14,27,-19,-17,-18,-15,-16,]),'MUL_OP':([10,11,12,13,17,25,26,30,32,33,34,35,42,],[23,-12,-13,-14,23,23,-19,23,23,-18,-15,-16,23,]),')':([11,12,13,25,26,28,32,33,34,35,41,42,45,46,],[-12,-13,-14,35,-19,37,-17,-18,-15,-16,-9,-11,-8,-10,]),',':([11,12,13,26,32,33,34,35,42,],[-12,-13,-14,-19,-17,-18,-15,-16,44,]),'STRING':([14,],[24,]),'IDPARAMS':([18,43,],[29,29,]),':':([29,],[38,]),}
+_lr_action_items = {'PRINT':([0,10,47,64,],[5,5,5,5,]),'IDENTIFIER':([0,5,10,16,17,18,19,20,24,25,37,39,40,41,42,43,45,47,55,58,64,],[6,13,6,13,13,13,6,13,13,13,13,13,13,13,13,13,13,6,6,13,6,]),'FOR':([0,10,47,64,],[7,7,7,7,]),'WHILE':([0,10,47,64,],[8,8,8,8,]),'FORMS':([0,10,47,64,],[9,9,9,9,]),'$end':([1,10,22,],[0,-1,-2,]),';':([2,3,4,11,12,13,14,15,23,27,28,29,34,35,36,44,46,48,49,50,51,52,53,54,60,62,66,],[10,-3,-4,23,-18,-19,-20,-21,-5,-25,-26,37,-23,-24,-22,-13,55,-6,-7,-8,-9,-10,57,-17,-12,-16,-11,]),'NUMBER':([5,16,17,18,20,24,25,37,39,40,41,42,43,45,58,],[12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,]),'COLORPARAMS':([5,16,17,18,20,24,25,37,39,40,41,42,43,45,58,],[14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,]),'STRING':([5,16,17,18,20,24,25,37,39,40,41,42,43,45,58,],[15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,]),'(':([5,7,8,9,16,17,18,20,24,25,37,39,40,41,42,43,45,58,],[16,19,20,21,16,16,16,16,16,16,16,16,16,16,16,16,16,16,]),'ADD_OP':([5,11,12,13,14,15,16,17,18,20,24,25,26,27,28,31,34,35,36,37,39,40,41,42,43,45,48,49,50,51,52,54,58,],[17,24,-18,-19,-20,-21,17,17,17,17,17,17,24,-25,24,24,-23,-24,-22,17,17,17,17,17,17,17,24,24,24,24,24,24,17,]),'=':([6,],[18,]),'}':([10,22,56,65,],[-1,-2,60,66,]),'MUL_OP':([11,12,13,14,15,26,27,28,31,34,35,36,48,49,50,51,52,54,],[25,-18,-19,-20,-21,25,-25,25,25,25,-24,-22,25,25,25,25,25,25,]),')':([12,13,14,15,26,27,28,30,32,34,35,36,48,49,50,51,52,53,54,59,61,62,],[-18,-19,-20,-21,36,-25,-26,38,44,-23,-24,-22,-6,-7,-8,-9,-10,-15,-17,63,-14,-16,]),'<':([12,13,14,15,27,31,34,35,36,],[-18,-19,-20,-21,-25,39,-23,-24,-22,]),'>':([12,13,14,15,27,31,34,35,36,],[-18,-19,-20,-21,-25,40,-23,-24,-22,]),'EQUALS':([12,13,14,15,27,31,34,35,36,],[-18,-19,-20,-21,-25,41,-23,-24,-22,]),'LESSTHAN':([12,13,14,15,27,31,34,35,36,],[-18,-19,-20,-21,-25,42,-23,-24,-22,]),'GREATTHAN':([12,13,14,15,27,31,34,35,36,],[-18,-19,-20,-21,-25,43,-23,-24,-22,]),',':([12,13,14,15,27,34,35,36,54,],[-18,-19,-20,-21,-25,-23,-24,-22,58,]),'IDPARAMS':([21,57,],[33,33,]),':':([33,],[45,]),'{':([38,63,],[47,64,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'programme':([0,9,21,27,],[1,20,31,36,]),'statement':([0,9,21,27,],[2,2,2,2,]),'structure':([0,9,21,27,],[3,3,3,3,]),'assignation':([0,9,21,27,],[4,4,4,4,]),'expression':([5,6,15,16,19,22,23,38,44,],[10,17,25,26,30,32,33,42,42,]),'params':([18,43,],[28,45,]),'paramvalue':([38,44,],[41,46,]),}
+_lr_goto_items = {'programme':([0,10,47,64,],[1,22,56,65,]),'statement':([0,10,47,64,],[2,2,2,2,]),'assignation':([0,10,19,47,55,64,],[3,3,29,3,59,3,]),'structure':([0,10,47,64,],[4,4,4,4,]),'expression':([5,16,17,18,20,24,25,37,39,40,41,42,43,45,58,],[11,26,27,28,31,34,35,31,48,49,50,51,52,54,54,]),'compare':([20,37,],[30,46,]),'params':([21,57,],[32,61,]),'paramvalue':([45,58,],[53,62,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,24 +26,30 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> programme","S'",1,None,None,None),
-  ('programme -> statement','programme',1,'p_programme_statement','yacc_project.py',9),
+  ('programme -> statement ;','programme',2,'p_programme_statement','yacc_project.py',9),
   ('programme -> statement ; programme','programme',3,'p_programme_recursive','yacc_project.py',14),
-  ('statement -> structure','statement',1,'p_statement','yacc_project.py',20),
-  ('statement -> assignation','statement',1,'p_statement','yacc_project.py',21),
-  ('structure -> FOR expression { programme }','structure',5,'p_structure_for','yacc_project.py',31),
-  ('structure -> WHILE expression { programme }','structure',5,'p_structure_while','yacc_project.py',36),
-  ('structure -> FORMS ( params )','structure',4,'p_structure_form','yacc_project.py',41),
-  ('params -> IDPARAMS : paramvalue ; params','params',5,'p_params','yacc_project.py',47),
-  ('params -> IDPARAMS : paramvalue','params',3,'p_params','yacc_project.py',48),
-  ('paramvalue -> expression , paramvalue','paramvalue',3,'p_paramvalue','yacc_project.py',54),
-  ('paramvalue -> expression','paramvalue',1,'p_paramvalue','yacc_project.py',55),
-  ('expression -> NUMBER','expression',1,'p_expression_num_or_id','yacc_project.py',60),
-  ('expression -> IDENTIFIER','expression',1,'p_expression_num_or_id','yacc_project.py',61),
-  ('expression -> COLORPARAMS','expression',1,'p_expression_num_or_id','yacc_project.py',62),
-  ('expression -> " STRING "','expression',3,'p_expression_num_or_id','yacc_project.py',63),
-  ('expression -> ( expression )','expression',3,'p_expression_paren','yacc_project.py',68),
-  ('expression -> expression ADD_OP expression','expression',3,'p_expression_op','yacc_project.py',73),
-  ('expression -> expression MUL_OP expression','expression',3,'p_expression_op','yacc_project.py',74),
-  ('expression -> ADD_OP expression','expression',2,'p_minus','yacc_project.py',87),
-  ('assignation -> IDENTIFIER = expression','assignation',3,'p_assign','yacc_project.py',91),
+  ('statement -> assignation','statement',1,'p_statement','yacc_project.py',18),
+  ('statement -> structure','statement',1,'p_statement','yacc_project.py',19),
+  ('statement -> PRINT expression ;','statement',3,'p_statement','yacc_project.py',20),
+  ('compare -> expression < expression','compare',3,'p_compare','yacc_project.py',27),
+  ('compare -> expression > expression','compare',3,'p_compare','yacc_project.py',28),
+  ('compare -> expression EQUALS expression','compare',3,'p_compare','yacc_project.py',29),
+  ('compare -> expression LESSTHAN expression','compare',3,'p_compare','yacc_project.py',30),
+  ('compare -> expression GREATTHAN expression','compare',3,'p_compare','yacc_project.py',31),
+  ('structure -> FOR ( assignation ; compare ; assignation ) { programme }','structure',11,'p_for','yacc_project.py',36),
+  ('structure -> WHILE ( compare ) { programme }','structure',7,'p_structure_while','yacc_project.py',40),
+  ('structure -> FORMS ( params )','structure',4,'p_structure_form','yacc_project.py',44),
+  ('params -> IDPARAMS : paramvalue ; params','params',5,'p_params','yacc_project.py',48),
+  ('params -> IDPARAMS : paramvalue','params',3,'p_params','yacc_project.py',49),
+  ('paramvalue -> expression , paramvalue','paramvalue',3,'p_paramvalue','yacc_project.py',61),
+  ('paramvalue -> expression','paramvalue',1,'p_paramvalue','yacc_project.py',62),
+  ('expression -> NUMBER','expression',1,'p_expression_num_or_id','yacc_project.py',70),
+  ('expression -> IDENTIFIER','expression',1,'p_expression_num_or_id','yacc_project.py',71),
+  ('expression -> COLORPARAMS','expression',1,'p_expression_num_or_id','yacc_project.py',72),
+  ('expression -> STRING','expression',1,'p_expression_num_or_id','yacc_project.py',73),
+  ('expression -> ( expression )','expression',3,'p_expression_paren','yacc_project.py',78),
+  ('expression -> expression ADD_OP expression','expression',3,'p_expression_op','yacc_project.py',83),
+  ('expression -> expression MUL_OP expression','expression',3,'p_expression_op','yacc_project.py',84),
+  ('expression -> ADD_OP expression','expression',2,'p_minus','yacc_project.py',89),
+  ('assignation -> IDENTIFIER = expression','assignation',3,'p_assign','yacc_project.py',93),
 ]

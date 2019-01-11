@@ -12,11 +12,11 @@ class DrawTools:
     def showtest(self):
         self.frame.show()
 
-    def addEllipse(self, pos, w, h, fillcolor=None, linecolor=None, linewidth=0):
-        self.img.ellipse((pos, pos[0]+w, pos[1]+h), fillcolor, linecolor, linewidth)
+    def addEllipse(self, pos, w, h, fillcolor=None, linecolor=None):
+        self.img.ellipse((pos, pos[0]+w, pos[1]+h), fillcolor, linecolor)
 
-    def addRectangle(self, pos, w, h, fillColor=None, lineColor=None, linewidth=0):
-        self.img.rectangle((pos, pos[0]+w, pos[1]+h), fillColor, lineColor, linewidth)
+    def addRectangle(self, pos, w, h, fillColor=None, lineColor=None):
+        self.img.rectangle((pos, pos[0]+w, pos[1]+h), fillColor, lineColor)
 
     def addLine(self, pointA, pointB, fillColor=None, linewidth=0):
         self.img.line((pointA, pointB), fillColor, linewidth)
