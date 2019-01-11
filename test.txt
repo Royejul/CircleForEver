@@ -1,1 +1,4 @@
-line(pos: 0, 0, 20, 0; width: 10; color: red)
+for(a=0;a<10;a+=2)
+{
+	print a;
+}

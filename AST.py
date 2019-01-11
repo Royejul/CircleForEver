@@ -119,19 +119,22 @@ class OpNode(Node):
     
 class AssignNode(Node):
     type = '='
-    
-class CompareNode(Node):
-    type = '<='
-    def __init__(self, op, children):
-        Node.__init__(self,children)
-        self.op = op
+
+class AssignInitNode(Node):
+    """AssignInitNode class."""
+
+    def __init__(self, type_var, children):
+        """Init AssignInitNode."""
+        Node.__init__(self, children)
+        self.type_var = type_var
         try:
             self.nbargs = len(children)
         except AttributeError:
             self.nbargs = 1
-        
+
     def __repr__(self):
-        return "%s (%s)" % (self.op, self.nbargs)
+        """Represent node."""
+        return "%s assign" % self.type_var  
     
 class PlusEgalNode(Node):
     type = '+='
@@ -144,6 +147,22 @@ class WhileNode(Node):
 
 class ForNode(Node):
     type = 'for'
+    
+class CompareNode(Node):
+    """CompareNode class."""
+    type = 'compare'
+    
+    def __init__(self, comparator, children):
+        """Init comparatorareNode."""
+        Node.__init__(self, children)
+        self.comparator = comparator
+        try:
+            self.nbargs = len(children)
+        except AttributeError:
+            self.nbargs = 1
+
+    def __repr__(self):
+        return "%s (%s)" % (self.comparator, self.nbargs)
     
 class FormNode(Node):
     type = 'Figure'
@@ -177,6 +196,9 @@ class IDNode(Node):
 class ValueNode(Node):
     type="Value"
     
+class PrintNode(Node):
+    type = 'Print'
+
 class EntryNode(Node):
     type = 'ENTRY'
     def __init__(self):

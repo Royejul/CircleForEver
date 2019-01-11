@@ -2,7 +2,7 @@ import ply.lex as lex
 import sys
 
 reserved_words = (
-    'while', 'for', 'if', 'else' #Loops and conditions
+    'while', 'for', 'print' #Loops and conditions
     
 )
 
@@ -26,7 +26,7 @@ reserved_colors = (
     'maroon', 'orange', 'lime'
 )
     
-tokens = ('NUMBER', 'ADD_OP', 'MUL_OP', 'PLUSEGAL', 'COMPARE', 'STRING', 'IDENTIFIER', 'FORMS', 'IDPARAMS', 'COLORPARAMS') + tuple(map(lambda s:s.upper(), reserved_words)) + tuple(map(lambda s:s.upper(), reserved_params)) + tuple(map(lambda s:s.upper(), reserved_colors))
+tokens = ('NUMBER', 'ADD_OP', 'MUL_OP', 'STRING', 'IDENTIFIER', 'FORMS', 'IDPARAMS', 'COLORPARAMS', 'EQUALS', 'LESSTHAN','GREATTHAN','NOTEQUAL',) + tuple(map(lambda s:s.upper(), reserved_words)) + tuple(map(lambda s:s.upper(), reserved_params)) + tuple(map(lambda s:s.upper(), reserved_colors))
 
 t_ignore = ' \t'
 
@@ -34,14 +34,6 @@ literals = '(){}<>;=,:'
 
 def t_ADD_OP(t):
     r'[+-]'
-    return t
-
-def t_PLUSEGAL(t):
-    r'[+][=]'
-    return t
-    
-def t_COMPARE(t):
-    r'[<][=]'
     return t
 
 def t_MUL_OP(t):
@@ -72,6 +64,22 @@ def t_IDENTIFIER(t):
     elif t.value in reserved_colors:
         t.type = 'COLORPARAMS'
         #t.type = t.value.upper()
+    return t
+
+def t_EQUALS(t):
+    r'=='
+    return t
+    
+def t_NOTEQUAL(t):
+    r'!='
+    return t
+
+def t_LESSTHAN(t):
+    r'<='
+    return t
+
+def t_GREATTHAN(t):
+    r'>='
     return t
 
 def t_newline(t):

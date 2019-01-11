@@ -9,39 +9,41 @@ def p_programme_statement(p):
     ''' programme : statement ';' '''
     p[0] = AST.ProgramNode(p[1])
 
-# Si une ligne contient plusieurs codes exécutables
+
 def p_programme_recursive(p):
     ''' programme : statement ';' programme '''
     p[0] = AST.ProgramNode([p[1]]+p[3].children)
 
-
-# Défini une ligne
 def p_statement(p):
-    ''' statement : structure
-        | assignation '''
-    p[0] = p[1]
+    """ statement : assignation
+        | structure
+        | PRINT expression ';' """
+    try:
+        p[0] = AST.PrintNode(p[2])
+    except Exception as e:
+        p[0] = p[1]
 
-# Défini un PRINT()
-#def p_statement_print(p):
-#    ''' statement : PRINT expression '''
-#    p[0] = AST.PrintNode(p[2])
+def p_compare(p):
+    """ compare : expression '<' expression
+        | expression '>' expression
+        | expression EQUALS expression
+        | expression LESSTHAN expression
+        | expression GREATTHAN expression
+        """
+    p[0] = AST.CompareNode(p[2], [p[1], p[3]])
 
-# Défini une fonction FOR
-def p_structure_for(p):
-    ''' structure : FOR expression '{' programme '}' '''
-    p[0] = AST.ForNode([p[2],p[4]])
+def p_for(p):
+    ''' structure : FOR '(' assignation ';' compare ';' assignation ')' '{' programme '}' '''
+    p[0] = AST.ForNode([p[3], p[5], p[7], p[10]])
 
-# Défini une fonction WHILE
 def p_structure_while(p):
-    ''' structure : WHILE expression '{' programme '}' '''
-    p[0] = AST.WhileNode([p[2],p[4]])
+    ''' structure : WHILE '(' compare ')' '{' programme '}' '''
+    p[0] = AST.WhileNode([p[3], p[6]])
 
-# Défini une structure comme un IDENTIFIER(programme) --> (Line(pos: ...))
 def p_structure_form(p):
     ''' structure : FORMS '(' params ')' '''
     p[0] = AST.FormNode(p[1] , [p[3]])
 
-# Défini une suite de paramètres comme un IDPARAMS (pos, width, etc) et son EXPRESSION (ses paramètres)
 def p_params(p):
     ''' params : IDPARAMS ':' paramvalue ';' params
         | IDPARAMS ':' paramvalue '''
@@ -55,7 +57,6 @@ def p_params(p):
         #p[0] = AST.ParameterNode(AST.IDNode(p[1]), [p[3]])
         p[0] = AST.ParameterNode(p[1], [p[3]])
  
-# Défini une expression comme une suite d'expressions, séparées par une virgule (paramètres)
 def p_paramvalue(p):
     ''' paramvalue : expression ',' paramvalue 
         | expression '''
@@ -83,23 +84,20 @@ def p_expression_op(p):
             | expression MUL_OP expression '''
     p[0] = AST.OpNode(p[2], [p[1], p[3]])
 
-def p_expression_compare(p):
-    ''' expression : expression COMPARE expression '''
-    p[0] = AST.CompareNode(p[2], [p[1], p[3]])
-
-def p_expression_plusegal(p):
-    ''' expression : expression PLUSEGAL expression '''
-    p[0] = AST.PlusEgalNode(p[3])
-
 # Défini nombre négatif
 def p_minus(p):
     ''' expression : ADD_OP expression %prec UMINUS'''
     p[0] = AST.OpNode([p[1], p[2]])
 
 def p_assign(p):
-    ''' assignation : IDENTIFIER '=' expression '''
-    p[0] = AST.AssignNode([AST.TokenNode(p[1]),p[3]])
-    vars[p[1]] = p[3]
+    """ assignation : IDENTIFIER '=' expression """
+    try:
+        #vars[p[1]] = (vars[p[1]][0], p[3])
+        p[0] = AST.AssignNode([AST.TokenNode(p[1]), p[3]])
+    except KeyError as e:
+        exit("Syntax error near line %s\n>> Token \"%s\" was not declared" %
+             (p.lineno(1), p[1]))
+        raise SyntaxError(p)
 
 def p_error(p):
     if p:
@@ -112,8 +110,7 @@ def p_error(p):
 precedence = (
     ('left', 'ADD_OP'),
     ('left', 'MUL_OP'),
-    ('left', 'PLUSEGAL'),
-    ('right', 'UMINUS'),
+    ('right', 'UMINUS')
 )
 
 def parse(program):
