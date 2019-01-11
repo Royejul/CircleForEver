@@ -29,7 +29,7 @@ tokens = ('NUMBER', 'ADD_OP', 'MUL_OP', 'STRING', 'IDENTIFIER', 'FORMS', 'IDPARA
 
 t_ignore = ' \t'
 
-literals = '(){}<>;=,:'
+literals = '(){};=,:'
 
 def t_ADD_OP(t):
     r'[+-]'
@@ -48,10 +48,11 @@ def t_STRING(t):
     r'\".*?\"'
     t.value = t.value[1:-1] # [1:-1] enlève les guillemets de la string
     return t
-    
+
 def t_IDENTIFIER(t):
     r'[A-Za-z_]\w*'
     if t.value in reserved_words:
+        #t.type = 'IDENTIFIER'
         t.type = t.value.upper()
     elif t.value in reserved_params:
         t.type = 'IDPARAMS'

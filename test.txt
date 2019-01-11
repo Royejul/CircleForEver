@@ -1,11 +1,11 @@
 line(pos : 0,0,0,10 ; color : black ; width: 2);
-line(pos : 0,0,0,10 ; color : black ; width: 2);
-i=0;
+text(pos:0,0;word:'poney');
+i='poney;
 print i ;
-WHILE ( i < 10){
-	print i;
+while ( i == 10){
+	line(pos : 0,0,0,10 ; color : black ; width: 2);
 	i= i+1
-}
-for( a = 0 ; a<10 ; a= a+2 ){
+};
+for ( a = 2 ; a<10 ; a= a+1 ){
 	print a
 }

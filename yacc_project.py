@@ -32,11 +32,11 @@ def p_compare(p):
     p[0] = AST.CompareNode(p[2], [p[1], p[3]])
 
 def p_structure_for(p):
-    ''' structure : IDENTIFIER '(' assignation ';' compare ';' assignation ')' '{' programme '}' '''
+    """ structure : FOR '(' assignation ';' compare ';' assignation ')' '{' programme '}' """
     p[0] = AST.ForNode([p[3], p[5], p[7], p[10]])
 
 def p_structure_while(p):
-    ''' structure : IDENTIFIER '(' compare ')' '{' programme '}' '''
+    ''' structure : WHILE '(' compare ')' '{' programme '}' '''
     p[0] = AST.WhileNode([p[3], p[6]])
 
 def p_structure_form(p):
@@ -44,7 +44,7 @@ def p_structure_form(p):
     p[0] = AST.FormNode(p[1], [p[3]])
 
 def p_param(p):
-    '''param : IDPARAMS ':' paramvalue'''
+    '''param : IDPARAMS ':' paramvalue '''
     p[0]= AST.ParameterNode(p[1], [p[3]])
 
 def p_param_list(p):
@@ -94,10 +94,13 @@ def p_assign(p):
 
 def p_error(p):
     if p:
-        print ("Syntax error in line %d" % p.lineno)
+        tok = yacc.token()
+        print("Syntax error at token \"%s\" near line %s" % (p.type, p.lineno))
+        # Just discard the token and tell the parser it's okay.
         yacc.errok()
+        return tok
     else:
-        print ("Sytax error: unexpected end of file!")
+        print("Syntax error at EOF")
 
 
 precedence = (
@@ -117,8 +120,8 @@ if __name__ == "__main__":
     result = yacc.parse(prog)
     print(result)
     
-    #import os
-    #graph = result.makegraphicaltree()
-    #name = os.path.splitext(sys.argv[1])[0] + '-ast.pdf'
-    #graph.write_pdf(name)
-    #print("wrote ast to", name)
+    import os
+    graph = result.makegraphicaltree()
+    name = os.path.splitext(sys.argv[1])[0] + '-ast.pdf'
+    graph.write_pdf(name)
+    print("wrote ast to", name)

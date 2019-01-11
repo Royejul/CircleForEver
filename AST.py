@@ -10,7 +10,7 @@ est une utilisation un peu "limite" de graphviz. Ça marche, mais le layout n'est
 pas toujours optimal...
 '''
 
-import pydot
+import pydot_ng as pydot
 
 class Node:
     count = 0
@@ -56,7 +56,7 @@ class Node:
                     edge.set_label(str(i))
                 dot.add_edge(edge)
                 #Workaround for a bug in pydot 1.0.2 on Windows:
-                #dot.set_graphviz_executables({'dot': r'C:\Program Files\Graphviz2.38\bin\dot.exe'})
+                dot.set_graphviz_executables({'dot': r'C:\Program Files (x86)\Graphviz2.38\bin\dot.exe'})
             return dot
         
     def threadTree(self, graph, seen = None, col=0):
@@ -135,10 +135,7 @@ class AssignInitNode(Node):
     def __repr__(self):
         """Represent node."""
         return "%s assign" % self.type_var  
-    
-class PlusEgalNode(Node):
-    type = '+='
-    
+
 class PrintNode(Node):
     type = 'print'
     
@@ -213,7 +210,7 @@ class ValueNode(Node):
         return "%s (%s)" % (self.type, self.nbargs)
     
 class PrintNode(Node):
-    type = 'Print'
+    type = 'print'
 
 class EntryNode(Node):
     type = 'ENTRY'

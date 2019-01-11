@@ -3,8 +3,6 @@ Created by PLY version 3.9 (http://www.dabeaz.com/ply)
 Unused terminals:
 
     NOTEQUAL
-    WHILE
-    FOR
     POS
     WIDTH
     COLOR
@@ -35,8 +33,8 @@ Rule 6     compare -> expression COMP expression
 Rule 7     compare -> expression EQUALS expression
 Rule 8     compare -> expression LESSTHAN expression
 Rule 9     compare -> expression GREATTHAN expression
-Rule 10    structure -> IDENTIFIER ( assignation ; compare ; assignation ) { programme }
-Rule 11    structure -> IDENTIFIER ( compare ) { programme }
+Rule 10    structure -> FOR ( assignation ; compare ; assignation ) { programme }
+Rule 11    structure -> WHILE ( compare ) { programme }
 Rule 12    structure -> FORMS ( params )
 Rule 13    param -> IDPARAMS : paramvalue
 Rule 14    params -> param
@@ -69,11 +67,11 @@ COLORPARAMS          : 20
 COMP                 : 6
 EQUALS               : 7
 FONTSIZE             : 
-FOR                  : 
+FOR                  : 10
 FORMS                : 12
 GREATTHAN            : 9
 GREEN                : 
-IDENTIFIER           : 10 11 19 26
+IDENTIFIER           : 19 26
 IDPARAMS             : 13
 LESSTHAN             : 8
 LIME                 : 
@@ -89,7 +87,7 @@ PURPLE               :
 RADIUS               : 
 RED                  : 
 STRING               : 21
-WHILE                : 
+WHILE                : 11
 WHITE                : 
 WIDTH                : 
 WORD                 : 
@@ -121,13 +119,15 @@ state 0
     (4) statement -> . structure
     (5) statement -> . PRINT expression
     (26) assignation -> . IDENTIFIER = expression
-    (10) structure -> . IDENTIFIER ( assignation ; compare ; assignation ) { programme }
-    (11) structure -> . IDENTIFIER ( compare ) { programme }
+    (10) structure -> . FOR ( assignation ; compare ; assignation ) { programme }
+    (11) structure -> . WHILE ( compare ) { programme }
     (12) structure -> . FORMS ( params )
 
     PRINT           shift and go to state 5
     IDENTIFIER      shift and go to state 6
-    FORMS           shift and go to state 7
+    FOR             shift and go to state 7
+    WHILE           shift and go to state 8
+    FORMS           shift and go to state 9
 
     programme                      shift and go to state 1
     statement                      shift and go to state 2
@@ -147,7 +147,7 @@ state 2
 
     $end            reduce using rule 1 (programme -> statement .)
     }               reduce using rule 1 (programme -> statement .)
-    ;               shift and go to state 8
+    ;               shift and go to state 10
 
 
 state 3
@@ -180,33 +180,44 @@ state 5
     (24) expression -> . expression MUL_OP expression
     (25) expression -> . ADD_OP expression
 
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    COLORPARAMS     shift and go to state 12
-    STRING          shift and go to state 13
-    (               shift and go to state 14
-    ADD_OP          shift and go to state 15
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    COLORPARAMS     shift and go to state 14
+    STRING          shift and go to state 15
+    (               shift and go to state 16
+    ADD_OP          shift and go to state 17
 
-    expression                     shift and go to state 9
+    expression                     shift and go to state 11
 
 state 6
 
     (26) assignation -> IDENTIFIER . = expression
-    (10) structure -> IDENTIFIER . ( assignation ; compare ; assignation ) { programme }
-    (11) structure -> IDENTIFIER . ( compare ) { programme }
 
-    =               shift and go to state 16
-    (               shift and go to state 17
+    =               shift and go to state 18
 
 
 state 7
 
-    (12) structure -> FORMS . ( params )
+    (10) structure -> FOR . ( assignation ; compare ; assignation ) { programme }
 
-    (               shift and go to state 18
+    (               shift and go to state 19
 
 
 state 8
+
+    (11) structure -> WHILE . ( compare ) { programme }
+
+    (               shift and go to state 20
+
+
+state 9
+
+    (12) structure -> FORMS . ( params )
+
+    (               shift and go to state 21
+
+
+state 10
 
     (2) programme -> statement ; . programme
     (1) programme -> . statement
@@ -215,20 +226,22 @@ state 8
     (4) statement -> . structure
     (5) statement -> . PRINT expression
     (26) assignation -> . IDENTIFIER = expression
-    (10) structure -> . IDENTIFIER ( assignation ; compare ; assignation ) { programme }
-    (11) structure -> . IDENTIFIER ( compare ) { programme }
+    (10) structure -> . FOR ( assignation ; compare ; assignation ) { programme }
+    (11) structure -> . WHILE ( compare ) { programme }
     (12) structure -> . FORMS ( params )
 
     PRINT           shift and go to state 5
     IDENTIFIER      shift and go to state 6
-    FORMS           shift and go to state 7
+    FOR             shift and go to state 7
+    WHILE           shift and go to state 8
+    FORMS           shift and go to state 9
 
     statement                      shift and go to state 2
-    programme                      shift and go to state 19
+    programme                      shift and go to state 22
     assignation                    shift and go to state 3
     structure                      shift and go to state 4
 
-state 9
+state 11
 
     (5) statement -> PRINT expression .
     (23) expression -> expression . ADD_OP expression
@@ -237,11 +250,11 @@ state 9
     ;               reduce using rule 5 (statement -> PRINT expression .)
     $end            reduce using rule 5 (statement -> PRINT expression .)
     }               reduce using rule 5 (statement -> PRINT expression .)
-    ADD_OP          shift and go to state 20
-    MUL_OP          shift and go to state 21
+    ADD_OP          shift and go to state 23
+    MUL_OP          shift and go to state 24
 
 
-state 10
+state 12
 
     (18) expression -> NUMBER .
 
@@ -258,7 +271,7 @@ state 10
     ,               reduce using rule 18 (expression -> NUMBER .)
 
 
-state 11
+state 13
 
     (19) expression -> IDENTIFIER .
 
@@ -275,7 +288,7 @@ state 11
     ,               reduce using rule 19 (expression -> IDENTIFIER .)
 
 
-state 12
+state 14
 
     (20) expression -> COLORPARAMS .
 
@@ -292,7 +305,7 @@ state 12
     ,               reduce using rule 20 (expression -> COLORPARAMS .)
 
 
-state 13
+state 15
 
     (21) expression -> STRING .
 
@@ -309,7 +322,7 @@ state 13
     ,               reduce using rule 21 (expression -> STRING .)
 
 
-state 14
+state 16
 
     (22) expression -> ( . expression )
     (18) expression -> . NUMBER
@@ -321,16 +334,16 @@ state 14
     (24) expression -> . expression MUL_OP expression
     (25) expression -> . ADD_OP expression
 
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    COLORPARAMS     shift and go to state 12
-    STRING          shift and go to state 13
-    (               shift and go to state 14
-    ADD_OP          shift and go to state 15
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    COLORPARAMS     shift and go to state 14
+    STRING          shift and go to state 15
+    (               shift and go to state 16
+    ADD_OP          shift and go to state 17
 
-    expression                     shift and go to state 22
+    expression                     shift and go to state 25
 
-state 15
+state 17
 
     (25) expression -> ADD_OP . expression
     (18) expression -> . NUMBER
@@ -342,16 +355,16 @@ state 15
     (24) expression -> . expression MUL_OP expression
     (25) expression -> . ADD_OP expression
 
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    COLORPARAMS     shift and go to state 12
-    STRING          shift and go to state 13
-    (               shift and go to state 14
-    ADD_OP          shift and go to state 15
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    COLORPARAMS     shift and go to state 14
+    STRING          shift and go to state 15
+    (               shift and go to state 16
+    ADD_OP          shift and go to state 17
 
-    expression                     shift and go to state 23
+    expression                     shift and go to state 26
 
-state 16
+state 18
 
     (26) assignation -> IDENTIFIER = . expression
     (18) expression -> . NUMBER
@@ -363,20 +376,27 @@ state 16
     (24) expression -> . expression MUL_OP expression
     (25) expression -> . ADD_OP expression
 
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    COLORPARAMS     shift and go to state 12
-    STRING          shift and go to state 13
-    (               shift and go to state 14
-    ADD_OP          shift and go to state 15
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    COLORPARAMS     shift and go to state 14
+    STRING          shift and go to state 15
+    (               shift and go to state 16
+    ADD_OP          shift and go to state 17
 
-    expression                     shift and go to state 24
+    expression                     shift and go to state 27
 
-state 17
+state 19
 
-    (10) structure -> IDENTIFIER ( . assignation ; compare ; assignation ) { programme }
-    (11) structure -> IDENTIFIER ( . compare ) { programme }
+    (10) structure -> FOR ( . assignation ; compare ; assignation ) { programme }
     (26) assignation -> . IDENTIFIER = expression
+
+    IDENTIFIER      shift and go to state 6
+
+    assignation                    shift and go to state 28
+
+state 20
+
+    (11) structure -> WHILE ( . compare ) { programme }
     (6) compare -> . expression COMP expression
     (7) compare -> . expression EQUALS expression
     (8) compare -> . expression LESSTHAN expression
@@ -390,30 +410,29 @@ state 17
     (24) expression -> . expression MUL_OP expression
     (25) expression -> . ADD_OP expression
 
-    IDENTIFIER      shift and go to state 25
-    NUMBER          shift and go to state 10
-    COLORPARAMS     shift and go to state 12
-    STRING          shift and go to state 13
-    (               shift and go to state 14
-    ADD_OP          shift and go to state 15
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    COLORPARAMS     shift and go to state 14
+    STRING          shift and go to state 15
+    (               shift and go to state 16
+    ADD_OP          shift and go to state 17
 
-    assignation                    shift and go to state 26
-    compare                        shift and go to state 27
-    expression                     shift and go to state 28
+    compare                        shift and go to state 29
+    expression                     shift and go to state 30
 
-state 18
+state 21
 
     (12) structure -> FORMS ( . params )
     (14) params -> . param
     (15) params -> . param ; params
     (13) param -> . IDPARAMS : paramvalue
 
-    IDPARAMS        shift and go to state 31
+    IDPARAMS        shift and go to state 33
 
-    params                         shift and go to state 29
-    param                          shift and go to state 30
+    params                         shift and go to state 31
+    param                          shift and go to state 32
 
-state 19
+state 22
 
     (2) programme -> statement ; programme .
 
@@ -421,7 +440,7 @@ state 19
     }               reduce using rule 2 (programme -> statement ; programme .)
 
 
-state 20
+state 23
 
     (23) expression -> expression ADD_OP . expression
     (18) expression -> . NUMBER
@@ -433,16 +452,16 @@ state 20
     (24) expression -> . expression MUL_OP expression
     (25) expression -> . ADD_OP expression
 
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    COLORPARAMS     shift and go to state 12
-    STRING          shift and go to state 13
-    (               shift and go to state 14
-    ADD_OP          shift and go to state 15
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    COLORPARAMS     shift and go to state 14
+    STRING          shift and go to state 15
+    (               shift and go to state 16
+    ADD_OP          shift and go to state 17
 
-    expression                     shift and go to state 32
+    expression                     shift and go to state 34
 
-state 21
+state 24
 
     (24) expression -> expression MUL_OP . expression
     (18) expression -> . NUMBER
@@ -454,27 +473,27 @@ state 21
     (24) expression -> . expression MUL_OP expression
     (25) expression -> . ADD_OP expression
 
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    COLORPARAMS     shift and go to state 12
-    STRING          shift and go to state 13
-    (               shift and go to state 14
-    ADD_OP          shift and go to state 15
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    COLORPARAMS     shift and go to state 14
+    STRING          shift and go to state 15
+    (               shift and go to state 16
+    ADD_OP          shift and go to state 17
 
-    expression                     shift and go to state 33
+    expression                     shift and go to state 35
 
-state 22
+state 25
 
     (22) expression -> ( expression . )
     (23) expression -> expression . ADD_OP expression
     (24) expression -> expression . MUL_OP expression
 
-    )               shift and go to state 34
-    ADD_OP          shift and go to state 20
-    MUL_OP          shift and go to state 21
+    )               shift and go to state 36
+    ADD_OP          shift and go to state 23
+    MUL_OP          shift and go to state 24
 
 
-state 23
+state 26
 
     (25) expression -> ADD_OP expression .
     (23) expression -> expression . ADD_OP expression
@@ -492,11 +511,11 @@ state 23
     GREATTHAN       reduce using rule 25 (expression -> ADD_OP expression .)
     ,               reduce using rule 25 (expression -> ADD_OP expression .)
 
-  ! ADD_OP          [ shift and go to state 20 ]
-  ! MUL_OP          [ shift and go to state 21 ]
+  ! ADD_OP          [ shift and go to state 23 ]
+  ! MUL_OP          [ shift and go to state 24 ]
 
 
-state 24
+state 27
 
     (26) assignation -> IDENTIFIER = expression .
     (23) expression -> expression . ADD_OP expression
@@ -506,39 +525,25 @@ state 24
     $end            reduce using rule 26 (assignation -> IDENTIFIER = expression .)
     }               reduce using rule 26 (assignation -> IDENTIFIER = expression .)
     )               reduce using rule 26 (assignation -> IDENTIFIER = expression .)
-    ADD_OP          shift and go to state 20
-    MUL_OP          shift and go to state 21
-
-
-state 25
-
-    (26) assignation -> IDENTIFIER . = expression
-    (19) expression -> IDENTIFIER .
-
-    =               shift and go to state 16
-    COMP            reduce using rule 19 (expression -> IDENTIFIER .)
-    EQUALS          reduce using rule 19 (expression -> IDENTIFIER .)
-    LESSTHAN        reduce using rule 19 (expression -> IDENTIFIER .)
-    GREATTHAN       reduce using rule 19 (expression -> IDENTIFIER .)
-    ADD_OP          reduce using rule 19 (expression -> IDENTIFIER .)
-    MUL_OP          reduce using rule 19 (expression -> IDENTIFIER .)
-
-
-state 26
-
-    (10) structure -> IDENTIFIER ( assignation . ; compare ; assignation ) { programme }
-
-    ;               shift and go to state 35
-
-
-state 27
-
-    (11) structure -> IDENTIFIER ( compare . ) { programme }
-
-    )               shift and go to state 36
+    ADD_OP          shift and go to state 23
+    MUL_OP          shift and go to state 24
 
 
 state 28
+
+    (10) structure -> FOR ( assignation . ; compare ; assignation ) { programme }
+
+    ;               shift and go to state 37
+
+
+state 29
+
+    (11) structure -> WHILE ( compare . ) { programme }
+
+    )               shift and go to state 38
+
+
+state 30
 
     (6) compare -> expression . COMP expression
     (7) compare -> expression . EQUALS expression
@@ -547,38 +552,38 @@ state 28
     (23) expression -> expression . ADD_OP expression
     (24) expression -> expression . MUL_OP expression
 
-    COMP            shift and go to state 37
-    EQUALS          shift and go to state 38
-    LESSTHAN        shift and go to state 39
-    GREATTHAN       shift and go to state 40
-    ADD_OP          shift and go to state 20
-    MUL_OP          shift and go to state 21
+    COMP            shift and go to state 39
+    EQUALS          shift and go to state 40
+    LESSTHAN        shift and go to state 41
+    GREATTHAN       shift and go to state 42
+    ADD_OP          shift and go to state 23
+    MUL_OP          shift and go to state 24
 
 
-state 29
+state 31
 
     (12) structure -> FORMS ( params . )
 
-    )               shift and go to state 41
+    )               shift and go to state 43
 
 
-state 30
+state 32
 
     (14) params -> param .
     (15) params -> param . ; params
 
     )               reduce using rule 14 (params -> param .)
-    ;               shift and go to state 42
+    ;               shift and go to state 44
 
 
-state 31
+state 33
 
     (13) param -> IDPARAMS . : paramvalue
 
-    :               shift and go to state 43
+    :               shift and go to state 45
 
 
-state 32
+state 34
 
     (23) expression -> expression ADD_OP expression .
     (23) expression -> expression . ADD_OP expression
@@ -594,13 +599,13 @@ state 32
     LESSTHAN        reduce using rule 23 (expression -> expression ADD_OP expression .)
     GREATTHAN       reduce using rule 23 (expression -> expression ADD_OP expression .)
     ,               reduce using rule 23 (expression -> expression ADD_OP expression .)
-    MUL_OP          shift and go to state 21
+    MUL_OP          shift and go to state 24
 
   ! MUL_OP          [ reduce using rule 23 (expression -> expression ADD_OP expression .) ]
-  ! ADD_OP          [ shift and go to state 20 ]
+  ! ADD_OP          [ shift and go to state 23 ]
 
 
-state 33
+state 35
 
     (24) expression -> expression MUL_OP expression .
     (23) expression -> expression . ADD_OP expression
@@ -618,11 +623,11 @@ state 33
     GREATTHAN       reduce using rule 24 (expression -> expression MUL_OP expression .)
     ,               reduce using rule 24 (expression -> expression MUL_OP expression .)
 
-  ! ADD_OP          [ shift and go to state 20 ]
-  ! MUL_OP          [ shift and go to state 21 ]
+  ! ADD_OP          [ shift and go to state 23 ]
+  ! MUL_OP          [ shift and go to state 24 ]
 
 
-state 34
+state 36
 
     (22) expression -> ( expression ) .
 
@@ -639,9 +644,9 @@ state 34
     ,               reduce using rule 22 (expression -> ( expression ) .)
 
 
-state 35
+state 37
 
-    (10) structure -> IDENTIFIER ( assignation ; . compare ; assignation ) { programme }
+    (10) structure -> FOR ( assignation ; . compare ; assignation ) { programme }
     (6) compare -> . expression COMP expression
     (7) compare -> . expression EQUALS expression
     (8) compare -> . expression LESSTHAN expression
@@ -655,24 +660,24 @@ state 35
     (24) expression -> . expression MUL_OP expression
     (25) expression -> . ADD_OP expression
 
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    COLORPARAMS     shift and go to state 12
-    STRING          shift and go to state 13
-    (               shift and go to state 14
-    ADD_OP          shift and go to state 15
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    COLORPARAMS     shift and go to state 14
+    STRING          shift and go to state 15
+    (               shift and go to state 16
+    ADD_OP          shift and go to state 17
 
-    compare                        shift and go to state 44
-    expression                     shift and go to state 28
+    compare                        shift and go to state 46
+    expression                     shift and go to state 30
 
-state 36
+state 38
 
-    (11) structure -> IDENTIFIER ( compare ) . { programme }
+    (11) structure -> WHILE ( compare ) . { programme }
 
-    {               shift and go to state 45
+    {               shift and go to state 47
 
 
-state 37
+state 39
 
     (6) compare -> expression COMP . expression
     (18) expression -> . NUMBER
@@ -684,16 +689,16 @@ state 37
     (24) expression -> . expression MUL_OP expression
     (25) expression -> . ADD_OP expression
 
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    COLORPARAMS     shift and go to state 12
-    STRING          shift and go to state 13
-    (               shift and go to state 14
-    ADD_OP          shift and go to state 15
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    COLORPARAMS     shift and go to state 14
+    STRING          shift and go to state 15
+    (               shift and go to state 16
+    ADD_OP          shift and go to state 17
 
-    expression                     shift and go to state 46
+    expression                     shift and go to state 48
 
-state 38
+state 40
 
     (7) compare -> expression EQUALS . expression
     (18) expression -> . NUMBER
@@ -705,16 +710,16 @@ state 38
     (24) expression -> . expression MUL_OP expression
     (25) expression -> . ADD_OP expression
 
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    COLORPARAMS     shift and go to state 12
-    STRING          shift and go to state 13
-    (               shift and go to state 14
-    ADD_OP          shift and go to state 15
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    COLORPARAMS     shift and go to state 14
+    STRING          shift and go to state 15
+    (               shift and go to state 16
+    ADD_OP          shift and go to state 17
 
-    expression                     shift and go to state 47
+    expression                     shift and go to state 49
 
-state 39
+state 41
 
     (8) compare -> expression LESSTHAN . expression
     (18) expression -> . NUMBER
@@ -726,16 +731,16 @@ state 39
     (24) expression -> . expression MUL_OP expression
     (25) expression -> . ADD_OP expression
 
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    COLORPARAMS     shift and go to state 12
-    STRING          shift and go to state 13
-    (               shift and go to state 14
-    ADD_OP          shift and go to state 15
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    COLORPARAMS     shift and go to state 14
+    STRING          shift and go to state 15
+    (               shift and go to state 16
+    ADD_OP          shift and go to state 17
 
-    expression                     shift and go to state 48
+    expression                     shift and go to state 50
 
-state 40
+state 42
 
     (9) compare -> expression GREATTHAN . expression
     (18) expression -> . NUMBER
@@ -747,16 +752,16 @@ state 40
     (24) expression -> . expression MUL_OP expression
     (25) expression -> . ADD_OP expression
 
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    COLORPARAMS     shift and go to state 12
-    STRING          shift and go to state 13
-    (               shift and go to state 14
-    ADD_OP          shift and go to state 15
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    COLORPARAMS     shift and go to state 14
+    STRING          shift and go to state 15
+    (               shift and go to state 16
+    ADD_OP          shift and go to state 17
 
-    expression                     shift and go to state 49
+    expression                     shift and go to state 51
 
-state 41
+state 43
 
     (12) structure -> FORMS ( params ) .
 
@@ -765,19 +770,19 @@ state 41
     }               reduce using rule 12 (structure -> FORMS ( params ) .)
 
 
-state 42
+state 44
 
     (15) params -> param ; . params
     (14) params -> . param
     (15) params -> . param ; params
     (13) param -> . IDPARAMS : paramvalue
 
-    IDPARAMS        shift and go to state 31
+    IDPARAMS        shift and go to state 33
 
-    param                          shift and go to state 30
-    params                         shift and go to state 50
+    param                          shift and go to state 32
+    params                         shift and go to state 52
 
-state 43
+state 45
 
     (13) param -> IDPARAMS : . paramvalue
     (16) paramvalue -> . expression , paramvalue
@@ -791,46 +796,48 @@ state 43
     (24) expression -> . expression MUL_OP expression
     (25) expression -> . ADD_OP expression
 
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    COLORPARAMS     shift and go to state 12
-    STRING          shift and go to state 13
-    (               shift and go to state 14
-    ADD_OP          shift and go to state 15
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    COLORPARAMS     shift and go to state 14
+    STRING          shift and go to state 15
+    (               shift and go to state 16
+    ADD_OP          shift and go to state 17
 
-    paramvalue                     shift and go to state 51
-    expression                     shift and go to state 52
+    paramvalue                     shift and go to state 53
+    expression                     shift and go to state 54
 
-state 44
+state 46
 
-    (10) structure -> IDENTIFIER ( assignation ; compare . ; assignation ) { programme }
+    (10) structure -> FOR ( assignation ; compare . ; assignation ) { programme }
 
-    ;               shift and go to state 53
+    ;               shift and go to state 55
 
 
-state 45
+state 47
 
-    (11) structure -> IDENTIFIER ( compare ) { . programme }
+    (11) structure -> WHILE ( compare ) { . programme }
     (1) programme -> . statement
     (2) programme -> . statement ; programme
     (3) statement -> . assignation
     (4) statement -> . structure
     (5) statement -> . PRINT expression
     (26) assignation -> . IDENTIFIER = expression
-    (10) structure -> . IDENTIFIER ( assignation ; compare ; assignation ) { programme }
-    (11) structure -> . IDENTIFIER ( compare ) { programme }
+    (10) structure -> . FOR ( assignation ; compare ; assignation ) { programme }
+    (11) structure -> . WHILE ( compare ) { programme }
     (12) structure -> . FORMS ( params )
 
     PRINT           shift and go to state 5
     IDENTIFIER      shift and go to state 6
-    FORMS           shift and go to state 7
+    FOR             shift and go to state 7
+    WHILE           shift and go to state 8
+    FORMS           shift and go to state 9
 
-    programme                      shift and go to state 54
+    programme                      shift and go to state 56
     statement                      shift and go to state 2
     assignation                    shift and go to state 3
     structure                      shift and go to state 4
 
-state 46
+state 48
 
     (6) compare -> expression COMP expression .
     (23) expression -> expression . ADD_OP expression
@@ -838,11 +845,11 @@ state 46
 
     )               reduce using rule 6 (compare -> expression COMP expression .)
     ;               reduce using rule 6 (compare -> expression COMP expression .)
-    ADD_OP          shift and go to state 20
-    MUL_OP          shift and go to state 21
+    ADD_OP          shift and go to state 23
+    MUL_OP          shift and go to state 24
 
 
-state 47
+state 49
 
     (7) compare -> expression EQUALS expression .
     (23) expression -> expression . ADD_OP expression
@@ -850,11 +857,11 @@ state 47
 
     )               reduce using rule 7 (compare -> expression EQUALS expression .)
     ;               reduce using rule 7 (compare -> expression EQUALS expression .)
-    ADD_OP          shift and go to state 20
-    MUL_OP          shift and go to state 21
+    ADD_OP          shift and go to state 23
+    MUL_OP          shift and go to state 24
 
 
-state 48
+state 50
 
     (8) compare -> expression LESSTHAN expression .
     (23) expression -> expression . ADD_OP expression
@@ -862,11 +869,11 @@ state 48
 
     )               reduce using rule 8 (compare -> expression LESSTHAN expression .)
     ;               reduce using rule 8 (compare -> expression LESSTHAN expression .)
-    ADD_OP          shift and go to state 20
-    MUL_OP          shift and go to state 21
+    ADD_OP          shift and go to state 23
+    MUL_OP          shift and go to state 24
 
 
-state 49
+state 51
 
     (9) compare -> expression GREATTHAN expression .
     (23) expression -> expression . ADD_OP expression
@@ -874,18 +881,18 @@ state 49
 
     )               reduce using rule 9 (compare -> expression GREATTHAN expression .)
     ;               reduce using rule 9 (compare -> expression GREATTHAN expression .)
-    ADD_OP          shift and go to state 20
-    MUL_OP          shift and go to state 21
+    ADD_OP          shift and go to state 23
+    MUL_OP          shift and go to state 24
 
 
-state 50
+state 52
 
     (15) params -> param ; params .
 
     )               reduce using rule 15 (params -> param ; params .)
 
 
-state 51
+state 53
 
     (13) param -> IDPARAMS : paramvalue .
 
@@ -893,37 +900,37 @@ state 51
     )               reduce using rule 13 (param -> IDPARAMS : paramvalue .)
 
 
-state 52
+state 54
 
     (16) paramvalue -> expression . , paramvalue
     (17) paramvalue -> expression .
     (23) expression -> expression . ADD_OP expression
     (24) expression -> expression . MUL_OP expression
 
-    ,               shift and go to state 55
+    ,               shift and go to state 57
     ;               reduce using rule 17 (paramvalue -> expression .)
     )               reduce using rule 17 (paramvalue -> expression .)
-    ADD_OP          shift and go to state 20
-    MUL_OP          shift and go to state 21
-
-
-state 53
-
-    (10) structure -> IDENTIFIER ( assignation ; compare ; . assignation ) { programme }
-    (26) assignation -> . IDENTIFIER = expression
-
-    IDENTIFIER      shift and go to state 56
-
-    assignation                    shift and go to state 57
-
-state 54
-
-    (11) structure -> IDENTIFIER ( compare ) { programme . }
-
-    }               shift and go to state 58
+    ADD_OP          shift and go to state 23
+    MUL_OP          shift and go to state 24
 
 
 state 55
+
+    (10) structure -> FOR ( assignation ; compare ; . assignation ) { programme }
+    (26) assignation -> . IDENTIFIER = expression
+
+    IDENTIFIER      shift and go to state 6
+
+    assignation                    shift and go to state 58
+
+state 56
+
+    (11) structure -> WHILE ( compare ) { programme . }
+
+    }               shift and go to state 59
+
+
+state 57
 
     (16) paramvalue -> expression , . paramvalue
     (16) paramvalue -> . expression , paramvalue
@@ -937,40 +944,33 @@ state 55
     (24) expression -> . expression MUL_OP expression
     (25) expression -> . ADD_OP expression
 
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    COLORPARAMS     shift and go to state 12
-    STRING          shift and go to state 13
-    (               shift and go to state 14
-    ADD_OP          shift and go to state 15
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    COLORPARAMS     shift and go to state 14
+    STRING          shift and go to state 15
+    (               shift and go to state 16
+    ADD_OP          shift and go to state 17
 
-    expression                     shift and go to state 52
-    paramvalue                     shift and go to state 59
-
-state 56
-
-    (26) assignation -> IDENTIFIER . = expression
-
-    =               shift and go to state 16
-
-
-state 57
-
-    (10) structure -> IDENTIFIER ( assignation ; compare ; assignation . ) { programme }
-
-    )               shift and go to state 60
-
+    expression                     shift and go to state 54
+    paramvalue                     shift and go to state 60
 
 state 58
 
-    (11) structure -> IDENTIFIER ( compare ) { programme } .
+    (10) structure -> FOR ( assignation ; compare ; assignation . ) { programme }
 
-    ;               reduce using rule 11 (structure -> IDENTIFIER ( compare ) { programme } .)
-    $end            reduce using rule 11 (structure -> IDENTIFIER ( compare ) { programme } .)
-    }               reduce using rule 11 (structure -> IDENTIFIER ( compare ) { programme } .)
+    )               shift and go to state 61
 
 
 state 59
+
+    (11) structure -> WHILE ( compare ) { programme } .
+
+    ;               reduce using rule 11 (structure -> WHILE ( compare ) { programme } .)
+    $end            reduce using rule 11 (structure -> WHILE ( compare ) { programme } .)
+    }               reduce using rule 11 (structure -> WHILE ( compare ) { programme } .)
+
+
+state 60
 
     (16) paramvalue -> expression , paramvalue .
 
@@ -978,47 +978,49 @@ state 59
     )               reduce using rule 16 (paramvalue -> expression , paramvalue .)
 
 
-state 60
-
-    (10) structure -> IDENTIFIER ( assignation ; compare ; assignation ) . { programme }
-
-    {               shift and go to state 61
-
-
 state 61
 
-    (10) structure -> IDENTIFIER ( assignation ; compare ; assignation ) { . programme }
+    (10) structure -> FOR ( assignation ; compare ; assignation ) . { programme }
+
+    {               shift and go to state 62
+
+
+state 62
+
+    (10) structure -> FOR ( assignation ; compare ; assignation ) { . programme }
     (1) programme -> . statement
     (2) programme -> . statement ; programme
     (3) statement -> . assignation
     (4) statement -> . structure
     (5) statement -> . PRINT expression
     (26) assignation -> . IDENTIFIER = expression
-    (10) structure -> . IDENTIFIER ( assignation ; compare ; assignation ) { programme }
-    (11) structure -> . IDENTIFIER ( compare ) { programme }
+    (10) structure -> . FOR ( assignation ; compare ; assignation ) { programme }
+    (11) structure -> . WHILE ( compare ) { programme }
     (12) structure -> . FORMS ( params )
 
     PRINT           shift and go to state 5
     IDENTIFIER      shift and go to state 6
-    FORMS           shift and go to state 7
+    FOR             shift and go to state 7
+    WHILE           shift and go to state 8
+    FORMS           shift and go to state 9
 
     assignation                    shift and go to state 3
-    programme                      shift and go to state 62
+    programme                      shift and go to state 63
     statement                      shift and go to state 2
     structure                      shift and go to state 4
 
-state 62
-
-    (10) structure -> IDENTIFIER ( assignation ; compare ; assignation ) { programme . }
-
-    }               shift and go to state 63
-
-
 state 63
 
-    (10) structure -> IDENTIFIER ( assignation ; compare ; assignation ) { programme } .
+    (10) structure -> FOR ( assignation ; compare ; assignation ) { programme . }
 
-    ;               reduce using rule 10 (structure -> IDENTIFIER ( assignation ; compare ; assignation ) { programme } .)
-    $end            reduce using rule 10 (structure -> IDENTIFIER ( assignation ; compare ; assignation ) { programme } .)
-    }               reduce using rule 10 (structure -> IDENTIFIER ( assignation ; compare ; assignation ) { programme } .)
+    }               shift and go to state 64
+
+
+state 64
+
+    (10) structure -> FOR ( assignation ; compare ; assignation ) { programme } .
+
+    ;               reduce using rule 10 (structure -> FOR ( assignation ; compare ; assignation ) { programme } .)
+    $end            reduce using rule 10 (structure -> FOR ( assignation ; compare ; assignation ) { programme } .)
+    }               reduce using rule 10 (structure -> FOR ( assignation ; compare ; assignation ) { programme } .)
 
