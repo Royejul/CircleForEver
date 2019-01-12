@@ -5,6 +5,10 @@ import AST
 
 vars = {}
 
+def p_init_statement(p):
+    '''init : programme'''
+    p[0] = AST.InitNode(p[1])
+
 def p_programme_statement(p):
     ''' programme : statement '''
     p[0] = AST.ProgramNode(p[1])

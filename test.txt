@@ -1,8 +1,8 @@
 line(pos : 0,0,0,10 ; color : black ; width: 2);
 text(pos:0,0;word:'poney');
-i='poney;
+i=0;
 print i ;
-while ( i == 10){
+while ( i < 10){
 	line(pos : 0,0,0,10 ; color : black ; width: 2);
 	i= i+1
 };

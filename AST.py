@@ -91,7 +91,10 @@ class Node:
                     edge.set_labelfontcolor(color)
                 graph.add_edge(edge)
             return graph    
-        
+
+class InitNode(Node):
+    type = 'Initialisation'
+
 class ProgramNode(Node):
     type = 'Program'
         

@@ -6,7 +6,7 @@ reserved_words = (
 )
 
 reserved_forms = (
-    'line', 'text', 'ellipse', 'square'    
+    'line', 'text', 'ellipse', 'rectangle'
 )
 
 
@@ -14,9 +14,9 @@ reserved_params = (
     'pos',
     'width',
     'color',
+    'linecolor',
     'fontsize',
-    'word',
-    'radius'
+    'word'
 )
     
 reserved_colors = (
@@ -74,15 +74,15 @@ def t_EQUALS(t):
     return t
     
 def t_NOTEQUAL(t):
-    r'!='
+    r'=\!'
     return t
 
 def t_LESSTHAN(t):
-    r'<='
+    r'=<'
     return t
 
 def t_GREATTHAN(t):
-    r'>='
+    r'=>'
     return t
 
 def t_newline(t):
