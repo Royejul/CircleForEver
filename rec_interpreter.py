@@ -65,7 +65,9 @@ def execute(self):
         c.execute()
 
 @addToClass(AST.TokenNode)
-def execute(self):
+def execute(self, diff='test'):
+    if diff == 'word':
+        return self.tok
     if isinstance(self.tok, str):
         try:
             return vars[self.tok]
@@ -121,7 +123,6 @@ def execute(self):
             else:
                 val.append(args.get(i)[0])
     attrib = tuple(val)
-    print(attrib)
     if self.name == 'line':
         p.addLine(*attrib)
     elif self.name == 'rectangle':
@@ -142,12 +143,12 @@ def execute(self):
 
 @addToClass(AST.ParameterNode)
 def execute(self):
-    args = self.children[0].execute()
+    args = self.children[0].execute(self.name)
     return [self.name, args]
 
 @addToClass(AST.ValueNode)
-def execute(self):
-    return [c.execute() for c in self.children]
+def execute(self, namevalue):
+    return [c.execute(namevalue) for c in self.children]
 
 
 if __name__ == "__main__":
