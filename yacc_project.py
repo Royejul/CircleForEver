@@ -47,10 +47,6 @@ def p_structure_form(p):
     ''' structure : FORMS '(' params ')' '''
     p[0] = AST.FormNode(p[1], [p[3]])
 
-def p_param(p):
-    '''param : IDPARAMS ':' paramvalue '''
-    p[0]= AST.ParameterNode(p[1], [p[3]])
-
 def p_param_list(p):
     ''' params : param '''
     p[0] = AST.ParameterList([p[1]])
@@ -58,6 +54,10 @@ def p_param_list(p):
 def p_param_list_rec(p):
     ''' params : param ';' params '''
     p[0] = AST.ParameterList([p[1]]+p[3].children)
+
+def p_param(p):
+    '''param : IDPARAMS ':' paramvalue '''
+    p[0]= AST.ParameterNode(p[1], [p[3]])
  
 def p_paramvalue(p):
     ''' paramvalue : expression ',' paramvalue 
@@ -67,7 +67,6 @@ def p_paramvalue(p):
     except:
         p[0] = AST.ValueNode([p[1]])
 
-# Défini une expression comme un NUMBER ou IDENTIFIER ou une COLOR
 def p_expression_num_or_id(p):
     ''' expression : NUMBER
         | IDENTIFIER 
@@ -75,18 +74,15 @@ def p_expression_num_or_id(p):
         | STRING '''
     p[0] = AST.TokenNode(p[1])
 
-# Défini une expression comme une expression entre parenthèse
 def p_expression_paren(p):
     ''' expression : '(' expression ')' '''
     p[0] = p[2]
 
-# Défini une expression comme une opération (+, -, *)
 def p_expression_op(p):
     ''' expression : expression ADD_OP expression
             | expression MUL_OP expression '''
     p[0] = AST.OpNode(p[2], [p[1], p[3]])
 
-# Défini nombre négatif
 def p_minus(p):
     ''' expression : ADD_OP expression %prec UMINUS'''
     p[0] = AST.OpNode([p[1], p[2]])

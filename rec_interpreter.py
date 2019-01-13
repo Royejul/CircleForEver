@@ -42,15 +42,15 @@ params = (
 vars = {
     'white': (255, 255, 255),
     'black': (0, 0, 0),
-    'red': (1, 1, 1),
-    'blue': (),
+    'red': (255, 0, 0),
+    'green': (0, 255, 0),
+    'blue': (0, 0, 255),
     'yellow': (255, 255, 0),
-    'green': (),
-    'pink': (),
-    'purple': (),
-    'maroon': (),
-    'orange': (),
-    'lime': (),
+    'pink': (255, 0, 255),
+    'purple': (127, 0, 255),
+    'maroon': (153, 76, 0),
+    'orange': (255, 128, 0),
+    'lime': (128, 255, 0),
 }
 
 @addToClass(AST.InitNode)
