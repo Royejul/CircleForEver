@@ -78,7 +78,7 @@ def execute(self, diff='test'):
     return self.tok
 
 @addToClass(AST.OpNode)
-def execute(self):
+def execute(self, name='fix'):
     args = [c.execute() for c in self.children]
     if len(args) == 1:
         args.insert(0,0)
