@@ -4,7 +4,7 @@ i=0;
 print i ;
 while ( i < 10){
 	line(pos : 0,0,400,450 ; color : black ; width: 2);
-	ellipse(pos: 200, 700, 300, 200; color: lime; linecolor: yellow);
+	ellipse(pos: 100, 200, 400, 500; color: lime; linecolor: yellow);
 	i= i+1
 };
 for ( a = 2 ; a<10 ; a= a+1 ){
