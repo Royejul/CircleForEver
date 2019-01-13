@@ -1,6 +1,6 @@
 from PIL import Image, ImageDraw, ImageFont
 
-
+#Classe qui permet de dessiner les formes voulus
 class DrawTools:
     def __init__(self, dim, backColor):
         self.frame = Image.new("RGB",dim,backColor)
@@ -34,4 +34,3 @@ if __name__ == "__main__":
     p.addLine((0,0,200,300),(0,0,0),5)
     p.addText((0, 60), "jambobinous",80,(0,0,0))
     p.showtest()
-    #p.PDFSave("poney.pdf")

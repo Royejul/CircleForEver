@@ -1,8 +1,13 @@
 import AST
 import operator
+import sys
+import os
+
 from AST import addToClass
 from functools import reduce
 from drawTools import DrawTools
+from yacc import parse
+
 
 operations = {
     '+': lambda x, y: x + y,
@@ -152,11 +157,14 @@ def execute(self, namevalue):
 
 
 if __name__ == "__main__":
-    from yacc_project import parse
-    import sys
-    import os
-    prog = open(sys.argv[1]).read()
-    name = os.path.splitext(sys.argv[1])[0] + '-image.pdf'
+    try:
+        filename = sys.argv[1]
+    except:
+        filename = "ExempleBoucle.txt"
+
+    prog = open(filename).read()
+    name = os.path.splitext(filename)[0] + '-image.pdf'
     ast = parse(prog)
 
     ast.execute(name)
+

@@ -1,4 +1,0 @@
-line(pos : 0,0,100,10 ; color : red ; width: 2);
-text(pos:0,0;word:'Unponey';fontsize:80;color:0,0,0);
-ellipse(pos : 100, 200, 400, 500; color : black ; linecolor: blue);
-rectangle(pos: 100, 200, 50, 93; color:pink; linecolor:black)

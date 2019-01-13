@@ -1,0 +1,8 @@
+i=0;
+while ( i < 30){
+	ellipse(pos: 0 + 100*i, 500, 200 + 100*i, 700; color: green; linecolor: black);
+	i= i+1
+};
+for ( a = 0 ; a<400 ; a= a+100 ){
+	rectangle(pos: a , a, 100 + a, 100 + a; color:red; linecolor:black)
+}

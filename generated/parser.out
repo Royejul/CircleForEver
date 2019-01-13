@@ -1,25 +1,25 @@
-Created by PLY version 3.9 (http://www.dabeaz.com/ply)
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    NOTEQUAL
-    POS
-    WIDTH
-    COLOR
-    LINECOLOR
-    FONTSIZE
-    WORD
-    WHITE
     BLACK
-    RED
     BLUE
-    YELLOW
+    COLOR
+    FONTSIZE
     GREEN
-    PINK
-    PURPLE
-    MAROON
-    ORANGE
     LIME
+    LINECOLOR
+    MAROON
+    NOTEQUAL
+    ORANGE
+    PINK
+    POS
+    PURPLE
+    RED
+    WHITE
+    WIDTH
+    WORD
+    YELLOW
 
 Grammar
 

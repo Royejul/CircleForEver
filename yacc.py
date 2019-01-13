@@ -1,6 +1,8 @@
 import ply.yacc as yacc
+import sys
+import os
 
-from lex_project import tokens
+from lex import tokens
 import AST
 
 vars = {}
@@ -115,13 +117,16 @@ def parse(program):
 yacc.yacc(outputdir='generated')
 
 if __name__ == "__main__":
-    import sys
-    prog = open(sys.argv[1]).read()
+    try:
+        filename = sys.argv[1]
+    except:
+        filename = "ExempleBoucle.txt"
+
+    prog = open(filename).read()
     result = yacc.parse(prog)
     print(result)
-    
-    import os
-    graph = result.makegraphicaltree()
-    name = os.path.splitext(sys.argv[1])[0] + '-ast.pdf'
-    graph.write_pdf(name)
-    print("wrote ast to", name)
+
+    # graph = result.makegraphicaltree()
+    # name = os.path.splitext(sys.argv[1])[0] + '-ast.pdf'
+    # graph.write_pdf(name)
+    # print("wrote ast to", name)

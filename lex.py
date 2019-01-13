@@ -24,8 +24,14 @@ reserved_colors = (
     'yellow', 'green', 'pink', 'purple',
     'maroon', 'orange', 'lime'
 )
-    
-tokens = ('NUMBER', 'ADD_OP', 'MUL_OP', 'STRING', 'IDENTIFIER', 'FORMS', 'IDPARAMS', 'COLORPARAMS', 'COMP', 'EQUALS', 'LESSTHAN','GREATTHAN','NOTEQUAL',) + tuple(map(lambda s:s.upper(), reserved_words)) + tuple(map(lambda s:s.upper(), reserved_params)) + tuple(map(lambda s:s.upper(), reserved_colors))
+
+tokens = ('NUMBER', 'ADD_OP', 'MUL_OP',
+          'STRING', 'IDENTIFIER', 'FORMS',
+          'IDPARAMS', 'COLORPARAMS', 'COMP',
+          'EQUALS', 'LESSTHAN','GREATTHAN','NOTEQUAL',)\
+         + tuple(map(lambda s:s.upper(), reserved_words)) \
+         + tuple(map(lambda s:s.upper(), reserved_params)) \
+         + tuple(map(lambda s:s.upper(), reserved_colors))
 
 t_ignore = ' \t'
 
@@ -99,7 +105,7 @@ if __name__ == "__main__":
     try:
         filename = sys.argv[1]
     except:
-        filename = "test.txt"
+        filename = "ExempleBoucle.txt"
 
     prog = open(filename).read()
 

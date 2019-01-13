@@ -10,7 +10,7 @@ est une utilisation un peu "limite" de graphviz. Ça marche, mais le layout n'est
 pas toujours optimal...
 '''
 
-import pydot_ng as pydot
+import pydot
 
 class Node:
     count = 0

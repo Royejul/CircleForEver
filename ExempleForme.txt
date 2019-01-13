@@ -1,0 +1,5 @@
+line(pos : 100,500,1000,500 ; color : red; width: 2);
+line(pos : 100,400,1000,400 ; color : 0,0,0 ; width: 10);
+text(pos : 100,300; word : "Compilateur DrawMyPDF"; fontsize : 80; color : 158,0,255);
+ellipse(pos: 100, 550, 300, 750; color: blue; linecolor: yellow);
+rectangle(pos: 500, 550, 1000, 750; color:pink; linecolor:black)
